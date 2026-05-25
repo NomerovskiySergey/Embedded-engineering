@@ -42,5 +42,5 @@ void loop() {
   Serial.print(" -> PWM: ");
   Serial.println(pwmValue);
 
-  delay(10); // Пауза для стабильности
+  delay(10);
 }
