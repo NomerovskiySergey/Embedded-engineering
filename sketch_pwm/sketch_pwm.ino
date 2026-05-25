@@ -35,7 +35,7 @@ void setup() {
 void loop() {
   potValue = analogRead(potPin);                    
   pwmValue = map(potValue, 0, 1023, 0, 255);        
-  analogWrite(ledPin, pwmValue);              
+  analogWrite(ledPin, pwmValue);      
 
   Serial.print("Analog: ");
   Serial.print(potValue);
