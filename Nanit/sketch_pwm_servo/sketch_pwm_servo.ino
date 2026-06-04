@@ -26,5 +26,19 @@ void setup() {
 }
 
 void loop() {
-  
+  if(digitalRead(angle0_pin)){
+    servo.write(0);
+  }
+
+  if(digitalRead(angle90_pin)){
+    servo.write(90);
+  }
+
+  if(digitalRead(angle180_pin)){
+    servo.write(180);
+  }
+
+  if(digitalRead(angle360_pin)){
+    servo.write(360);
+  }
 }
