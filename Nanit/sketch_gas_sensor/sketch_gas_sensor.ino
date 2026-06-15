@@ -16,6 +16,8 @@ void setup() {
 void loop() {
   int gas = analogRead(gasSensor_pin);
 
+  delay(1000);
+
   Serial.println(gas);
 
   if(gas > 500){

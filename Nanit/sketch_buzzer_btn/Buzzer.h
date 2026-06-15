@@ -10,4 +10,4 @@ class Buzzer{
   
   private:
     int _pin;
-}
+};

@@ -8,4 +8,4 @@ class Potentiometer{
   
   private:
     int _pin;
-}
+};

@@ -6,16 +6,18 @@ and another for gradually decreasing their brightness.
 The colors should fade in and fade out smoothly, one after another.
 */
 
-byte red_pin   = P4_2;
+byte red_pin = P4_2;
 byte green_pin = P4_3;
-byte blue_pin  = P4_4;
+byte blue_pin = P4_4;
 
 void setup() {
   Nanit_Base_Start();
 
-  pinMode(red_pin,   OUTPUT);
+  pinMode(red_pin, OUTPUT);
   pinMode(green_pin, OUTPUT);
-  pinMode(blue_pin,  OUTPUT);
+  pinMode(blue_pin, OUTPUT);
+
+  Serial.begin(9600);
 }
 
 void loop() {
@@ -29,12 +31,16 @@ void loop() {
   led_off(blue_pin);
 }
 
-void led_on(byte pin){
-  for(int i = 0; i < 255; i++)
+void led_on(byte pin) {
+  for (int i = 0; i < 255; i++) {
     analogWrite(pin, i);
+    delay(30);
+  }
 }
 
-void led_off(byte pin){
-    for(int i = 255; i < 0; i--)
+void led_off(byte pin) {
+  for (int i = 255; i > 0; i--) {
     analogWrite(pin, i);
+    delay(30);
+  }
 }
