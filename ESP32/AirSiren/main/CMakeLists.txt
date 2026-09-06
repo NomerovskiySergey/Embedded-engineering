@@ -1,0 +1,25 @@
+idf_component_register(
+  SRCS
+    "main.cpp"
+    "domain/alert_status.cpp"
+    "domain/poll_schedule.cpp"
+    "domain/threat_status.cpp"
+    "providers/tryvoha_parser.cpp"
+    "providers/tryvoha_events_parser.cpp"
+    "platform/alert_client.cpp"
+    "platform/display.cpp"
+    "platform/waveshare_display_profile.cpp"
+    "platform/status_led.cpp"
+    "platform/wifi_manager.cpp"
+  INCLUDE_DIRS "."
+  PRIV_REQUIRES
+    driver
+    esp_event
+    esp_http_client
+    esp_lcd
+    esp_netif
+    esp-tls
+    esp_wifi
+    led_strip
+    nvs_flash
+)
