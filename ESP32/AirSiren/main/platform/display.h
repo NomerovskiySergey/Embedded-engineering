@@ -14,10 +14,12 @@ class Display {
   esp_err_t show(AlertState state, bool wifiConnected,
                  uint32_t ageSeconds = 0,
                  ThreatType threat = ThreatType::None);
+  esp_err_t setBacklightDuty(uint32_t duty);
 
  private:
   void *_panel = nullptr;
   uint16_t *_pixels = nullptr;
+  uint32_t _backlightDuty = 0;
 };
 
 }  // namespace alertsiren

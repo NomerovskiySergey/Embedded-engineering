@@ -1,7 +1,9 @@
 #include <cstdint>
+#include <cstdlib>
 #include <ctime>
 
 #include "domain/alert_status.h"
+#include "domain/backlight_policy.h"
 #include "domain/poll_schedule.h"
 #include "esp_err.h"
 #include "esp_log.h"
@@ -32,6 +34,13 @@ uint32_t nowMs() {
 
 extern "C" void app_main() {
   ESP_ERROR_CHECK(nvs_flash_init());
+  const bool timezoneReady =
+      setenv("TZ", "EET-2EEST,M3.5.0/3,M10.5.0/4", 1) == 0;
+  if (timezoneReady) {
+    tzset();
+  } else {
+    ESP_LOGW(kTag, "Kyiv timezone setup failed; keeping full brightness");
+  }
 
   // AlertClient owns a bounded 32 KiB HTTP response buffer. Keep the long-lived
   // services in static storage so that they do not overflow ESP-IDF's main-task
@@ -58,6 +67,7 @@ extern "C" void app_main() {
   bool shownWifi = false;
   uint32_t shownAgeBucket = 0;
   alertsiren::ThreatType shownThreat = alertsiren::ThreatType::None;
+  bool backlightErrorReported = false;
 
   while (true) {
     const uint32_t currentMs = nowMs();
@@ -98,6 +108,21 @@ extern "C" void app_main() {
       currentState = alertsiren::AlertState::Unknown;
     }
     currentState = alertsiren::effectiveState(currentState, connected);
+    std::tm localTime = {};
+    const bool localTimeReady = timezoneReady && clockReady &&
+                                localtime_r(&currentEpoch, &localTime) != nullptr;
+    const esp_err_t backlightResult = display.setBacklightDuty(
+        alertsiren::backlightDuty(currentState, localTimeReady,
+                                  localTime.tm_hour));
+    if (backlightResult != ESP_OK) {
+      if (!backlightErrorReported) {
+        ESP_LOGW(kTag, "Backlight update failed (%s); monitoring continues",
+                 esp_err_to_name(backlightResult));
+        backlightErrorReported = true;
+      }
+    } else {
+      backlightErrorReported = false;
+    }
     const alertsiren::ThreatType currentThreat = alertsiren::visibleThreat(
         currentState, lastThreat, lastThreatSuccessMs, currentMs,
         kThreatFreshnessMs);
