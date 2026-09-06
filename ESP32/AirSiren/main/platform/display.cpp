@@ -14,6 +14,7 @@
 #include "esp_lcd_panel_vendor.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
+#include "domain/backlight_policy.h"
 #include "platform/waveshare_display_profile.h"
 
 namespace alertsiren {
@@ -190,16 +191,28 @@ esp_err_t Display::begin() {
   channelConfig.speed_mode = LEDC_LOW_SPEED_MODE;
   channelConfig.channel = LEDC_CHANNEL_0;
   channelConfig.timer_sel = LEDC_TIMER_0;
-  channelConfig.duty = 409;
+  channelConfig.duty = kDayBacklightDuty;
   channelConfig.hpoint = 0;
   result = ledc_channel_config(&channelConfig);
   if (result != ESP_OK) return result;
+  _backlightDuty = kDayBacklightDuty;
 
   _pixels = static_cast<uint16_t *>(
       heap_caps_malloc(kWidth * kHeight * sizeof(uint16_t), MALLOC_CAP_DMA));
   if (_pixels == nullptr) return ESP_ERR_NO_MEM;
   _panel = panel;
   return show(AlertState::Startup, false, 0);
+}
+
+esp_err_t Display::setBacklightDuty(const uint32_t duty) {
+  if (duty > kMaximumBacklightDuty) return ESP_ERR_INVALID_ARG;
+  if (duty == _backlightDuty) return ESP_OK;
+  esp_err_t result =
+      ledc_set_duty(LEDC_LOW_SPEED_MODE, LEDC_CHANNEL_0, duty);
+  if (result != ESP_OK) return result;
+  result = ledc_update_duty(LEDC_LOW_SPEED_MODE, LEDC_CHANNEL_0);
+  if (result == ESP_OK) _backlightDuty = duty;
+  return result;
 }
 
 esp_err_t Display::show(const AlertState state, const bool wifiConnected,

@@ -10,6 +10,7 @@ Status: Accepted on 2026-09-06.
 - `ESP32/AirSiren/` is isolated from sibling applications.
 - Authoritative flow: Wi-Fi -> verified HTTPS `/api/v1/alerts/dnipropetrovska` -> parsed alert state -> LCD theme and RGB LED.
 - Informational flow: verified HTTPS `/api/events` -> bounded event parser -> current threat label shown only while the authoritative state is Alert.
+- Backlight flow: synchronized epoch -> Kyiv local time -> pure brightness policy -> cached LEDC duty on GPIO22. This flow does not suspend networking, polling, display control, or the status LED.
 
 ## Invariants
 
@@ -21,3 +22,4 @@ Status: Accepted on 2026-09-06.
 - An unavailable/stale state must not silently illuminate green.
 - The device is supplementary and must not be presented as an official life-safety warning channel.
 - Threat classification must never change the authoritative alert state or LED output.
+- Alert always overrides scheduled dimming to normal brightness. Invalid time and timezone setup fail visibly at normal brightness.

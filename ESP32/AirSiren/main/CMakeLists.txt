@@ -2,6 +2,7 @@ idf_component_register(
   SRCS
     "main.cpp"
     "domain/alert_status.cpp"
+    "domain/backlight_policy.cpp"
     "domain/poll_schedule.cpp"
     "domain/threat_status.cpp"
     "providers/tryvoha_parser.cpp"

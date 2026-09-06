@@ -13,6 +13,8 @@ Status: Accepted on 2026-09-06.
 - Keep provider-specific JSON/transport details behind a replaceable alert-provider boundary.
 - Parse provider payloads with explicit size bounds. Compare JSON location strings only after bounded escape decoding; accept valid upper/lower `\\uXXXX` hex and mixed UTF-8/escaped representations.
 - Never embed real credentials or API tokens in tracked files; provide ignored local configuration or provisioning guidance.
+- Runtime failures in nonessential presentation controls such as backlight PWM must be logged and retried without rebooting or interrupting alert monitoring.
+- Time-based presentation policy must be pure and host-testable; timezone conversion remains at the platform/composition boundary.
 
 ## Testing
 
@@ -22,3 +24,4 @@ Status: Accepted on 2026-09-06.
 - Run `pio run` from the AirSiren project directory as the authoritative firmware build.
 - Hardware verification must cover LCD initialization, correct RGB color order, Wi-Fi recovery, and visible stale/error behavior.
 - Live threat verification must include Ukrainian location names as actually serialized by the provider, not only decoded test literals.
+- Scheduled display tests must cover both time boundaries, Alert override, and invalid-time fail-visible behavior.

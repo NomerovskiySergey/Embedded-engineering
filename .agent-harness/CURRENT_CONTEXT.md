@@ -2,7 +2,7 @@
 
 ## Active feature
 
-None. `FEAT-002-threat-type-display.md` is accepted and complete; Git commit remains pending explicit user approval.
+None. `FEAT-003.md` automatic night display dimming is accepted and complete; its Git commit remains pending explicit user approval.
 
 ## Confirmed project knowledge
 
@@ -37,7 +37,11 @@ None. `FEAT-002-threat-type-display.md` is accepted and complete; Git commit rem
 - FEAT-002 adds an informational `/api/events` threat feed while preserving the official regional endpoint as the sole alert/LED authority.
 - A physical-board defect caused escaped Ukrainian location names to remain `UNKNOWN`; bounded JSON Unicode decoding fixed it test-first.
 - User flashed the corrected build and confirmed live threat classification works on 2026-09-06. Final evidence: 26 host tests, RAM 71,808 bytes, flash 1,182,014 bytes.
+- FEAT-003 dims non-alert LCD backlight to 8% from 23:00 through 06:59 Kyiv local time; Alert and invalid time always use 40%.
+- Wi-Fi, API polling, LCD controller, and RGB LED remain active overnight. Runtime PWM failures are nonfatal and retry automatically.
+- FEAT-003 passed independent review/testing and was accepted by the user. Final evidence: 27 host tests, RAM 71,936 bytes, flash 1,190,262 bytes.
+- Agentic Harness branch naming was updated in its plugin source: use `feature/` for features and `bug/` for bug fixes.
 
 ## Next action
 
-Create a Git commit for the accepted AirSiren work only if the user explicitly approves committing it.
+Create a Git commit for FEAT-003 only if the user explicitly approves the Commit gate.

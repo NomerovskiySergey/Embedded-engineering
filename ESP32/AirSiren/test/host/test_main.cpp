@@ -3,6 +3,7 @@
 #include <string>
 
 #include "domain/alert_status.h"
+#include "domain/backlight_policy.h"
 #include "domain/poll_schedule.h"
 #include "providers/tryvoha_parser.h"
 #include "providers/tryvoha_events_parser.h"
@@ -321,6 +322,21 @@ void threat_visibility_requires_fresh_official_alert() {
   }
 }
 
+void night_backlight_policy_respects_boundaries_and_alert_override() {
+  using alertsiren::backlightDuty;
+  CHECK(backlightDuty(AlertState::Clear, true, 23) == 82U);
+  CHECK(backlightDuty(AlertState::Stale, true, 6) == 82U);
+  CHECK(backlightDuty(AlertState::Clear, true, 22) == 409U);
+  CHECK(backlightDuty(AlertState::Clear, true, 7) == 409U);
+  CHECK(backlightDuty(AlertState::Alert, true, 23) == 409U);
+  CHECK(backlightDuty(AlertState::Alert, true, 6) == 409U);
+  CHECK(backlightDuty(AlertState::Clear, false, 2) == 409U);
+  CHECK(backlightDuty(AlertState::Clear, true, -1) == 409U);
+  CHECK(backlightDuty(AlertState::Clear, true, 24) == 409U);
+  CHECK(alertsiren::kNightBacklightDuty <= alertsiren::kMaximumBacklightDuty);
+  CHECK(alertsiren::kDayBacklightDuty <= alertsiren::kMaximumBacklightDuty);
+}
+
 }  // namespace
 
 int main() {
@@ -350,11 +366,12 @@ int main() {
   escaped_unicode_locations_are_relevant();
   unicode_location_matching_accepts_valid_json_variants();
   threat_visibility_requires_fresh_official_alert();
+  night_backlight_policy_respects_boundaries_and_alert_override();
 
   if (failures != 0) {
     std::cerr << failures << " test check(s) failed\n";
     return 1;
   }
-  std::cout << "26 host tests passed\n";
+  std::cout << "27 host tests passed\n";
   return 0;
 }

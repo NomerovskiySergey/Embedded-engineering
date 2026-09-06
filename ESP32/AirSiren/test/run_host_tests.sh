@@ -11,6 +11,7 @@ c++ \
   -I main \
   test/host/test_main.cpp \
   main/domain/alert_status.cpp \
+  main/domain/backlight_policy.cpp \
   main/domain/poll_schedule.cpp \
   main/domain/threat_status.cpp \
   main/providers/tryvoha_parser.cpp \

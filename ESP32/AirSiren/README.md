@@ -15,6 +15,8 @@ An air-raid alert indicator for Dnipro, built for the Waveshare ESP32-C6-LCD-1.4
 
 The green LED is never enabled without a fresh, valid all-clear response. The API is polled every 30 seconds; failed requests use a bounded 5–60 second backoff.
 
+The LCD backlight automatically dims from 40% to 8% between 23:00 and 07:00 Kyiv local time. An active alert always restores 40% brightness immediately. Wi-Fi, API polling, the LCD controller, and the RGB status LED remain active overnight; the firmware does not enter sleep mode.
+
 During an official alert, the display also shows `THREAT: MISSILE`, `KAB`, `DRONE`, `RECON DRONE`, `WARNING`, `MULTIPLE`, or `UNKNOWN`.
 
 ## Hardware
