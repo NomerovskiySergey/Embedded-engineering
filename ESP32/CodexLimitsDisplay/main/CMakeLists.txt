@@ -1,0 +1,20 @@
+idf_component_register(
+  SRCS
+    "main.cpp"
+    "domain/limits_model.cpp"
+    "domain/poll_schedule.cpp"
+    "providers/limits_parser.cpp"
+    "platform/display.cpp"
+    "platform/limits_client.cpp"
+    "platform/waveshare_display_profile.cpp"
+    "platform/wifi_manager.cpp"
+  INCLUDE_DIRS "."
+  PRIV_REQUIRES
+    driver
+    esp_event
+    esp_http_client
+    esp_lcd
+    esp_netif
+    esp_wifi
+    nvs_flash
+)

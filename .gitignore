@@ -1,1 +1,5 @@
 /.agent-harness
+.agent-harness/features/README.md
+.agent-harness/CURRENT_CONTEXT.md
+.agent-harness/CONVENTIONS.md
+/.agent-harness

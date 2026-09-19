@@ -1,0 +1,5 @@
+.pio/
+main/secrets.h
+__pycache__/
+*.pyc
+/sdkconfig.waveshare_esp32_c6_lcd
