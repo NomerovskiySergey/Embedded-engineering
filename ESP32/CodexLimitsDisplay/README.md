@@ -31,12 +31,15 @@ against an attacker already able to capture trusted-LAN traffic.
 
 ## Display
 
-- Green: less than 70% of a window used.
-- Amber: 70-89% used.
-- Red: 90-100% used.
-- Gray bars and `STALE`: the last valid update is at least five minutes old.
-- `BRIDGE ERROR`: the last fetch failed; previous values remain visible but
-  are not presented as current.
+The 320 x 172 landscape UI is an LVGL 9 cyberpunk dashboard rendered through
+the native `esp_lcd` ST7789 driver. It uses two bounded cards, cyan progress
+bars, a pink title, and an emerald `ACTIVE` state. When live bridge data is
+available, the cards show bounded quota-window percentages and reset/update
+information; stale or disconnected data changes the header state to `STALE`.
+
+LVGL uses a static 320 x 20 RGB565 partial draw buffer (12,800 bytes), so a
+full-screen framebuffer is not required. The flush callback validates every
+region and waits for the SPI color transaction before releasing LVGL.
 
 The firmware polls every 60 seconds. HTTP runs on a dedicated FreeRTOS task, so
 the main loop remains responsive. Failed requests retry with a bounded
@@ -93,7 +96,7 @@ The configured hardware is ESP32-C6FH8 with 8 MB flash and an ST7789
 - CS GPIO14
 - DC GPIO15
 - RESET GPIO21
-- backlight GPIO22 at 40%
+- backlight GPIO22 driven HIGH
 
 Firmware upload and physical verification are intentionally separate from the
 automated checks.

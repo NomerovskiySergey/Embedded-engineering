@@ -10,9 +10,9 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "nvs_flash.h"
-#include "platform/display.h"
 #include "platform/limits_client.h"
 #include "platform/wifi_manager.h"
+#include "ui/dashboard.h"
 
 namespace {
 
@@ -42,14 +42,14 @@ extern "C" void app_main() {
       setenv("TZ", "EET-2EEST,M3.5.0/3,M10.5.0/4", 1) == 0;
   if (timezoneReady) tzset();
 
-  static codexlimits::Display display;
+  static codexlimits::Dashboard dashboard;
   static codexlimits::WifiManager wifi;
   static codexlimits::LimitsClient client;
   codexlimits::PollSchedule schedule(kPollIntervalMs, kFirstRetryMs,
                                      kMaximumRetryMs);
   codexlimits::SnapshotStore store;
 
-  ESP_ERROR_CHECK(display.begin());
+  ESP_ERROR_CHECK(dashboard.begin(nowMs()));
   ESP_ERROR_CHECK(wifi.begin());
   ESP_ERROR_CHECK(client.begin());
   if (!wifi.credentialsConfigured() || !client.configured()) {
@@ -63,6 +63,7 @@ extern "C" void app_main() {
 
   while (true) {
     const uint32_t currentMs = nowMs();
+    dashboard.service(currentMs);
     const bool connected = wifi.isConnected();
     if (connected != previousWifi) {
       previousWifi = connected;
@@ -70,9 +71,7 @@ extern "C" void app_main() {
     }
 
     if (connected && !fetchInFlight && schedule.isDue(currentMs)) {
-      if (client.requestFetch()) {
-        fetchInFlight = true;
-      }
+      if (client.requestFetch()) fetchInFlight = true;
     }
 
     codexlimits::FetchResult result = {};
@@ -103,13 +102,13 @@ extern "C" void app_main() {
           timezoneReady && currentEpoch >= kMinimumValidEpoch;
       const codexlimits::LimitsSnapshot *const snapshot =
           store.hasData() ? &store.snapshot() : nullptr;
-      ESP_ERROR_CHECK(display.show(
-          snapshot, connected,
-          connected && store.hasData() && !store.lastFetchFailed(),
-          fresh, store.ageSeconds(currentMs), clockReady));
+      dashboard.show(snapshot, connected,
+                     connected && store.hasData() &&
+                         !store.lastFetchFailed(),
+                     fresh, store.ageSeconds(currentMs), clockReady);
       lastRedrawMs = currentMs;
       redraw = false;
     }
-    vTaskDelay(pdMS_TO_TICKS(100));
+    vTaskDelay(pdMS_TO_TICKS(5));
   }
 }
