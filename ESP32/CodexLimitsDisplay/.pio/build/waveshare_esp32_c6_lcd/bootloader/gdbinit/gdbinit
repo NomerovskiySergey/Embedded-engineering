@@ -1,0 +1,2 @@
+source /Users/sergejnomerovskij/Projects/Embedding/EmbeddedEngeneering/ESP32/CodexLimitsDisplay/.pio/build/waveshare_esp32_c6_lcd/bootloader/gdbinit/symbols
+source /Users/sergejnomerovskij/Projects/Embedding/EmbeddedEngeneering/ESP32/CodexLimitsDisplay/.pio/build/waveshare_esp32_c6_lcd/bootloader/gdbinit/connect
