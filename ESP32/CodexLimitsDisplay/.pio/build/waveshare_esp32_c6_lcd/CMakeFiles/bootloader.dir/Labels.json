@@ -1,0 +1,43 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/Users/sergejnomerovskij/Projects/Embedding/EmbeddedEngeneering/ESP32/CodexLimitsDisplay/.pio/build/waveshare_esp32_c6_lcd/CMakeFiles/bootloader"
+		},
+		{
+			"file" : "/Users/sergejnomerovskij/Projects/Embedding/EmbeddedEngeneering/ESP32/CodexLimitsDisplay/.pio/build/waveshare_esp32_c6_lcd/CMakeFiles/bootloader.rule"
+		},
+		{
+			"file" : "/Users/sergejnomerovskij/Projects/Embedding/EmbeddedEngeneering/ESP32/CodexLimitsDisplay/.pio/build/waveshare_esp32_c6_lcd/CMakeFiles/bootloader-complete.rule"
+		},
+		{
+			"file" : "/Users/sergejnomerovskij/Projects/Embedding/EmbeddedEngeneering/ESP32/CodexLimitsDisplay/.pio/build/waveshare_esp32_c6_lcd/bootloader-prefix/src/bootloader-stamp/bootloader-build.rule"
+		},
+		{
+			"file" : "/Users/sergejnomerovskij/Projects/Embedding/EmbeddedEngeneering/ESP32/CodexLimitsDisplay/.pio/build/waveshare_esp32_c6_lcd/bootloader-prefix/src/bootloader-stamp/bootloader-configure.rule"
+		},
+		{
+			"file" : "/Users/sergejnomerovskij/Projects/Embedding/EmbeddedEngeneering/ESP32/CodexLimitsDisplay/.pio/build/waveshare_esp32_c6_lcd/bootloader-prefix/src/bootloader-stamp/bootloader-download.rule"
+		},
+		{
+			"file" : "/Users/sergejnomerovskij/Projects/Embedding/EmbeddedEngeneering/ESP32/CodexLimitsDisplay/.pio/build/waveshare_esp32_c6_lcd/bootloader-prefix/src/bootloader-stamp/bootloader-install.rule"
+		},
+		{
+			"file" : "/Users/sergejnomerovskij/Projects/Embedding/EmbeddedEngeneering/ESP32/CodexLimitsDisplay/.pio/build/waveshare_esp32_c6_lcd/bootloader-prefix/src/bootloader-stamp/bootloader-mkdir.rule"
+		},
+		{
+			"file" : "/Users/sergejnomerovskij/Projects/Embedding/EmbeddedEngeneering/ESP32/CodexLimitsDisplay/.pio/build/waveshare_esp32_c6_lcd/bootloader-prefix/src/bootloader-stamp/bootloader-patch.rule"
+		},
+		{
+			"file" : "/Users/sergejnomerovskij/Projects/Embedding/EmbeddedEngeneering/ESP32/CodexLimitsDisplay/.pio/build/waveshare_esp32_c6_lcd/bootloader-prefix/src/bootloader-stamp/bootloader-update.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"bootloader"
+		],
+		"name" : "bootloader"
+	}
+}

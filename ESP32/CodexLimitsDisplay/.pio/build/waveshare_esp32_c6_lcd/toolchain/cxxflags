@@ -1,0 +1,3 @@
+-march=rv32imac_zicsr_zifencei_zaamo_zalrsc
+"-specs=/Users/sergejnomerovskij/Projects/Embedding/EmbeddedEngeneering/ESP32/CodexLimitsDisplay/.pio/build/waveshare_esp32_c6_lcd/specs/picolibc.specs"
+-fno-rtti
